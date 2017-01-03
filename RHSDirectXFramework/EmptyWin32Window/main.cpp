@@ -2,7 +2,6 @@
 #include <tchar.h>
 
 // ISO C/C++ standard modules.
-#include <cstdio>
 
 static BOOL fDone = FALSE;
 
@@ -14,19 +13,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		fDone = TRUE;
 
 		PostQuitMessage(0);
+
 		break;
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
-		break;
 	}
+
+	return 0;
 }
 
 // This Showing Window example is based on MSDN (https://msdn.microsoft.com/en-us/library/bb384843.aspx)
 
 int main()
 {
-	static TCHAR szWindowClass[] = _T("win32app");
-	static TCHAR szTitle[] = _T("Win32 Guided Tour Application");
+	static const TCHAR szWindowClass[] = _T("win32app");
+	static const TCHAR szTitle[] = _T("Win32 Guided Tour Application");
+	static const auto windowWidth = 800;
+	static const auto windowHeight = 600;
 
 	WNDCLASSEX wcex;
 	wcex.cbSize			= sizeof(WNDCLASSEX);
@@ -51,12 +54,12 @@ int main()
 		return 1;
 	}
 
-	HWND hWnd = CreateWindow(
+	const auto hWnd = CreateWindow(
 		szWindowClass,
 		szTitle,
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, CW_USEDEFAULT,
-		800, 600,
+		windowWidth, windowHeight,
 		nullptr, nullptr, wcex.hInstance, nullptr);
 	if (!hWnd) {
 		MessageBox(nullptr,
